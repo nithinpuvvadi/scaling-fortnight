@@ -1,0 +1,10 @@
+# ansible/playbooks/deploy-addons.yml
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Verify kubectl connection to EKS
+      command: kubectl get nodes
+      register: kube_nodes
+    - name: Print cluster nodes
+      debug:
+        msg: "{{ kube_nodes.stdout }}"

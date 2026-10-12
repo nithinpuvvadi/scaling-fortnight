@@ -1,0 +1,25 @@
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Create argocd namespace
+      kubernetes.core.k8s:
+        name: argocd
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: Apply ArgoCD install manifest
+      kubernetes.core.k8s:
+        state: present
+        src: https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+        namespace: argocd
+
+    - name: Expose ArgoCD server via LoadBalancer
+      kubernetes.core.k8s:
+        state: patched
+        kind: Service
+        namespace: argocd
+        name: argocd-server
+        definition:
+          spec:
+            type: LoadBalancer

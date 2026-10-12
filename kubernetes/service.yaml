@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexus-app-service
+  namespace: nexus-ops
+spec:
+  type: LoadBalancer
+  selector:
+    app: nexus-app
+  ports:
+  - port: 80
+    targetPort: 80

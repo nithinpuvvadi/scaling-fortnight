@@ -1,0 +1,12 @@
+# ansible/playbooks/setup-workstation.yml
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Ensure required CLI tools dependencies are present
+      apt:
+        name:
+          - curl
+          - unzip
+          - git
+        state: present
+      become: true
